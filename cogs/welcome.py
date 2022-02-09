@@ -22,7 +22,7 @@ class welcome(commands.Cog):
     def __init__(self, client):
         self.client = client
         self.introductions = 941055150481633310
-        self.nlist = id=940778970964705340
+        self.nlist = 940778970964705340
         self.approval_reactions = {'thumbsup': '\U0001F44D', 'thumbsdown':'\U0001F44E'}
 
     @commands.Cog.listener()

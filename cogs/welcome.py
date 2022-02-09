@@ -46,7 +46,7 @@ class welcome(commands.Cog):
     
     @commands.command()
     async def channel_name(self, ctx):
-        print(f'Channel Information: \n {ctx.guild.text_channels}')
+        print(f'Channel Information: \n {ctx.guild.text_channels}\n')
         print(f'Role Information: \n{ctx.guild.roles}')
 
     @commands.Cog.listener()
@@ -62,9 +62,8 @@ class welcome(commands.Cog):
         new_user_channel = self.client.get_channel(self.new_user_list_channel)
         intro_channel = self.client.get_channel(self.intro_channel)
 
-        channel = member.guild.system_channel
         await member.add_roles(no_role)
-        await channel.send('Welcome {0.mention}, please introduce yourself with your name'.format(member))
+        await intro_channel.send('Welcome {0.mention}, please introduce yourself with your name'.format(member))
         
         def check_msg(message):  
             return (message.author != self.client.user) and (not message.content.startswith('!')) and (message.channel.id == self.intro_channel) and (message.author == member)

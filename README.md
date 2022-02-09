@@ -63,3 +63,4 @@ v0.0.0:
         - Currently working on setting up new cog: guild_setup 
               - Goal is to create the two roles and channels to streamline the process
               - Use database to upload variable information so that the bot can manage multiple guilds. 
+        - Ping specific roles when an unverified user makes messages the server based on their introduction. 

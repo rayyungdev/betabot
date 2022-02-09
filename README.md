@@ -4,9 +4,10 @@ Guild Managing Discord Bot:
 This is BetaBot, a discord-guild managing bot. 
 Its goal is to make guilds more private by preventing unverified users from having access to a guild's user list and a guild's access to channels. 
 
-v0.0.0:
-  Current Usage Requirements:
-      - User Permissions:
+v0.0.0:  
+  Current Usage Requirements:  
+  
+      - User Permissions:  
           - Only users with admin permissions can load & unload cogs
           - Only users with manage_channel permissions can use the !delete command
           
@@ -42,7 +43,9 @@ v0.0.0:
                     - Does not require any special permissions, since no role users cannot see other channels. 
                             - Recommended:
                                   - Only BetaBot has access to send messages across this channel
-   Set Up: 
+   Set Up:  
+   
+   
       - create .env file to set these variables: 
               - DISCORD_TOKEN = bot token ID
               - DISCORD_GUILD = Guild name
@@ -54,7 +57,9 @@ v0.0.0:
               - NO_ROLE_ID = No Role ID number
               - ROLE_ID = Role ID number
           
-  Future Updates: 
+  Future Updates:   
+  
+  
         - Currently working on setting up new cog: guild_setup 
               - Goal is to create the two roles and channels to streamline the process
               - Use database to upload variable information so that the bot can manage multiple guilds. 

@@ -56,9 +56,8 @@ v0.0.0:
               - NEW_USER_CHANNEL_ID = New User List Channel ID 
               - NO_ROLE_ID = No Role ID number
               - ROLE_ID = Role ID number
-          
+              
   Future Updates:   
-  
   
         - Currently working on setting up new cog: guild_setup 
               - Goal is to create the two roles and channels to streamline the process

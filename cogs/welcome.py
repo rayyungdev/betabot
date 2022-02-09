@@ -1,12 +1,10 @@
 import asyncio
-import re
-from shutil import ExecError
-from socket import timeout
 import discord
 from discord.ext import commands
 import sys
 sys.path.append('../bbot')
 from db_setup import *
+from dotenv import load_dotenv
 
 '''
     Fine tuning: 
@@ -17,12 +15,27 @@ from db_setup import *
         - Function creates specific channels (intro & new members) stores ID into DB
         - Function that creates the two standard roles (role & no roles) stores ID into DB
 '''
+load_dotenv()
+
+'''
+Use function !channel_name to view your role information. 
+This will be printed in terminal for privacy. 
+
+Plug the corresponding ID's into your .env file. 
+'''
+INTRO_CHANNEL_ID = int(os.getenv('INTRO_CHANNEL_ID'))
+NEW_USER_CHANNEL_ID = int(os.getenv('NEW_USER_CHANNEL_ID'))
+NO_ROLE_ID = int(os.getenv('NO_ROLE_ID'))
+ROLE_ID = int(os.getenv('ROLE_ID'))
 
 class welcome(commands.Cog):
     def __init__(self, client):
         self.client = client
-        self.introductions = 941055150481633310
-        self.nlist = 940778970964705340
+        self.intro_channel = INTRO_CHANNEL_ID
+        self.new_user_list_channel = NEW_USER_CHANNEL_ID
+        self.no_role = NO_ROLE_ID
+        self.role = ROLE_ID
+
         self.approval_reactions = {'thumbsup': '\U0001F44D', 'thumbsdown':'\U0001F44E'}
 
     @commands.Cog.listener()
@@ -33,8 +46,8 @@ class welcome(commands.Cog):
     
     @commands.command()
     async def channel_name(self, ctx):
-        print(ctx.guild.text_channels)
-        print(ctx.guild.roles)
+        print(f'Channel Information: \n {ctx.guild.text_channels}')
+        print(f'Role Information: \n{ctx.guild.roles}')
 
     @commands.Cog.listener()
     async def on_member_join(self, member : discord.Member):
@@ -43,17 +56,18 @@ class welcome(commands.Cog):
         if len(member.roles) > 1:
             return
         
-        no_role = discord.utils.get(self.client.get_guild(member.guild.id).roles, id = 938532676602843166)
-        role = discord.utils.get(self.client.get_guild(member.guild.id).roles, id = 938529963638919168)
-        new_user_channel = self.client.get_channel(self.nlist)
-        intro_channel = self.client.get_channel(self.introductions)
+        no_role = discord.utils.get(self.client.get_guild(member.guild.id).roles, id = self.no_role)
+        role = discord.utils.get(self.client.get_guild(member.guild.id).roles, id = self.role)
+
+        new_user_channel = self.client.get_channel(self.new_user_list_channel)
+        intro_channel = self.client.get_channel(self.intro_channel)
 
         channel = member.guild.system_channel
         await member.add_roles(no_role)
         await channel.send('Welcome {0.mention}, please introduce yourself with your name'.format(member))
         
         def check_msg(message):  
-            return (message.author != self.client.user) and (not message.content.startswith('!')) and (message.channel.id == self.introductions) and (message.author == member)
+            return (message.author != self.client.user) and (not message.content.startswith('!')) and (message.channel.id == self.intro_channel) and (message.author == member)
         
         try: 
             #Time out set to 5 minutes

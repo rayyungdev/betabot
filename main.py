@@ -12,12 +12,12 @@ intents.members = True
 
 client = commands.Bot(command_prefix = '!', intents = intents)
 
-@client.command()
+@client.command(brief = 'load cog')
 @commands.has_guild_permissions(administrator = True)
 async def load(ctx, extension):
     client.load_extension(f'cogs.{extension}')
 
-@client.command()
+@client.command(brief = 'unload cog')
 @commands.has_guild_permissions(administrator = True)
 async def unload(ctx, extension):
     client.unload_extension(f'cogs.{extension}')

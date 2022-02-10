@@ -8,12 +8,7 @@ from dotenv import load_dotenv
 
 '''
     Fine tuning: 
-    - Connect to database to save private information like id (Role, User, etc)
-    - Change hard coded id numbers & roles as variables pulled from databases.
-
-    - Create a cog that sets up guilds with the following functions:
-        - Function creates specific channels (intro & new members) stores ID into DB
-        - Function that creates the two standard roles (role & no roles) stores ID into DB
+    - Connect to database to load and save private information... Still need to find a way to share the variables created from the guild_setup cog
 '''
 load_dotenv()
 
@@ -25,7 +20,7 @@ Plug the corresponding ID's into your .env file.
 '''
 INTRO_CHANNEL_ID = int(os.getenv('INTRO_CHANNEL_ID'))
 NEW_USER_CHANNEL_ID = int(os.getenv('NEW_USER_CHANNEL_ID'))
-NO_ROLE_ID = int(os.getenv('NO_ROLE_ID'))
+NO_ROLE_ID= int(os.getenv('NO_ROLE_ID'))
 ROLE_ID = int(os.getenv('ROLE_ID'))
 
 class welcome(commands.Cog):
@@ -56,8 +51,8 @@ class welcome(commands.Cog):
         if len(member.roles) > 1:
             return
         
-        no_role = discord.utils.get(self.client.get_guild(member.guild.id).roles, id = self.no_role)
-        role = discord.utils.get(self.client.get_guild(member.guild.id).roles, id = self.role)
+        no_role = discord.utils.get(member.guild.roles, id = self.no_role)
+        role = discord.utils.get(member.guild.roles, id = self.role)
 
         new_user_channel = self.client.get_channel(self.new_user_list_channel)
         intro_channel = self.client.get_channel(self.intro_channel)
@@ -87,7 +82,7 @@ class welcome(commands.Cog):
 
         # Do not need to check if user has roles, as this only runs for new users. 
 
-        response = await new_user_channel.send(f'***New Member Alert!***\nUsername: **[{msg.author}]** \nthis is their message:\n\n> {msg.content}\n\n**Do you want to approve?** \n*(react with thumbsup or thumbsdown)*')
+        response = await new_user_channel.send(f'@here\n***New Member Alert!***\nUsername: **[{msg.author}]** \nthis is their message:\n\n> {msg.content}\n\n**Do you want to approve?** \n*(react with thumbsup or thumbsdown)*')
         for key, value in self.approval_reactions.items():
             await response.add_reaction(value)
 
@@ -125,12 +120,13 @@ class welcome(commands.Cog):
             await new_user_channel.send(f'***User {member} has been kicked***')
         
         await intro_channel.purge()
+        return
 
     # Generalize Role Name
-    @commands.command()
+    @commands.command(brief = 'Clear Chat History')
     @commands.has_guild_permissions(manage_messages = True)
     async def delete(self, ctx, amount = None):
         await ctx.channel.purge(limit = amount)
-
+        return
 def setup(client):
     client.add_cog(welcome(client))

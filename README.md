@@ -1,4 +1,8 @@
 # betabot
+
+**NEW UPDATE!**
+Added email functional --> Fun note, you can use this send emails as texts.   
+
 Guild Managing Discord Bot: 
 
 This is BetaBot, a discord-guild managing bot. 

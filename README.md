@@ -4,6 +4,13 @@ Guild Managing Discord Bot:
 This is BetaBot, a discord-guild managing bot. 
 Its goal is to make guilds more private by preventing unverified users from having access to a guild's user list and a guild's access to channels. 
 
+
+Update 2/10:
+
+    - Functional Cog: guild_setup
+    - This cog will help create the two roles for verified and unverified user along with the associated channels.
+    - You will still need to copy and paste these channel ID's and role ID's manually (see !channel_name for help)
+    
 v0.0.0:  
   Current Usage Requirements:  
   
@@ -56,7 +63,7 @@ v0.0.0:
               - NEW_USER_CHANNEL_ID = New User List Channel ID 
               - NO_ROLE_ID = No Role ID number
               - ROLE_ID = Role ID number
-              
+  
   Future Updates:   
   
         - Currently working on setting up new cog: guild_setup 
